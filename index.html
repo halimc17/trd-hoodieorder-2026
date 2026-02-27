@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pemesanan Jaket Atlit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex items-center justify-center p-4">
+
+    <div class="max-w-md w-full bg-white rounded-2xl shadow-2xl overflow-hidden relative">
+        <!-- Header -->
+        <div class="bg-indigo-700 p-6 text-white text-center">
+            <h1 class="text-2xl font-bold">Pemesanan Jaket Atlit</h1>
+            <p class="text-indigo-100 text-sm mt-1 italic">Tornado Volleyball Klub</p>
+        </div>
+
+        <form id="orderForm" class="p-6 space-y-5">
+            <!-- Data Diri -->
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Lengkap *</label>
+                    <input type="text" id="nama" name="nama" required placeholder="Nama lengkap Anda"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Nomor Telepon *</label>
+                    <input type="tel" id="telepon" name="telepon" required placeholder="Contoh: 08123456789"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                </div>
+            </div>
+
+            <hr class="border-gray-100">
+
+            <!-- Detail Ukuran -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-3 text-left">Pilih Ukuran & Jumlah *</label>
+                <div class="grid grid-cols-2 gap-2">
+                    <div class="flex items-center justify-between p-2 border border-gray-200 rounded-lg bg-gray-50">
+                        <span class="font-bold text-gray-600">S</span>
+                        <input type="number" data-size="S" value="0" min="0" class="size-input w-14 p-1 text-center border border-gray-300 rounded bg-white font-semibold">
+                    </div>
+                    <div class="flex items-center justify-between p-2 border border-gray-200 rounded-lg bg-gray-50">
+                        <span class="font-bold text-gray-600">M</span>
+                        <input type="number" data-size="M" value="0" min="0" class="size-input w-14 p-1 text-center border border-gray-300 rounded bg-white font-semibold">
+                    </div>
+                    <div class="flex items-center justify-between p-2 border border-gray-200 rounded-lg bg-gray-50">
+                        <span class="font-bold text-gray-600">L</span>
+                        <input type="number" data-size="L" value="0" min="0" class="size-input w-14 p-1 text-center border border-gray-300 rounded bg-white font-semibold">
+                    </div>
+                    <div class="flex items-center justify-between p-2 border border-gray-200 rounded-lg bg-gray-50">
+                        <span class="font-bold text-gray-600">XL</span>
+                        <input type="number" data-size="XL" value="0" min="0" class="size-input w-14 p-1 text-center border border-gray-300 rounded bg-white font-semibold">
+                    </div>
+                    <div class="flex items-center justify-between p-2 border border-gray-200 rounded-lg bg-gray-50">
+                        <span class="font-bold text-gray-600">2XL</span>
+                        <input type="number" data-size="2XL" value="0" min="0" class="size-input w-14 p-1 text-center border border-gray-300 rounded bg-white font-semibold">
+                    </div>
+                    <div class="flex items-center justify-between p-2 border border-gray-200 rounded-lg bg-gray-50">
+                        <span class="font-bold text-gray-600">3XL</span>
+                        <input type="number" data-size="3XL" value="0" min="0" class="size-input w-14 p-1 text-center border border-gray-300 rounded bg-white font-semibold">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-time Billing & Copy Account Info -->
+            <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100 shadow-inner">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-indigo-900 font-semibold text-sm">Total Tagihan:</span>
+                    <span id="displayTotal" class="text-2xl font-black text-indigo-700">Rp 0</span>
+                </div>
+                <div class="bg-white p-3 rounded-lg border border-indigo-200 text-xs text-indigo-800">
+                    <div class="flex justify-between items-center mb-2 pb-2 border-b border-indigo-50">
+                        <span class="font-bold">Harga Satuan:</span>
+                        <span class="font-bold text-indigo-700">Rp 225.000 / pcs</span>
+                    </div>
+                    
+                    <p class="font-bold mb-2 underline">Transfer ke Rekening:</p>
+                    <div class="flex items-center justify-between bg-indigo-50/50 p-2 rounded border border-dashed border-indigo-200">
+                        <div>
+                            <p class="font-mono text-sm font-bold tracking-wider" id="accNumber">0863015266</p>
+                            <p class="text-[10px] uppercase">BNI a.n. Tornado Volleyball Klub</p>
+                        </div>
+                        <button type="button" id="copyBtn" class="p-2 hover:bg-indigo-100 rounded-full transition-colors relative group" title="Salin nomor rekening">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-600">
+                                <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+                            </svg>
+                            <span id="copyFeedback" class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-[10px] px-2 py-1 rounded opacity-0 transition-opacity pointer-events-none whitespace-nowrap">Tersalin!</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Bukti -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Bukti Transfer (Gambar) *</label>
+                <div class="mt-1 flex items-center">
+                    <input type="file" id="buktiBayar" accept="image/*" required
+                        class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer">
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col space-y-3">
+                <button type="submit" id="btnSubmit"
+                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl transition-all active:scale-95 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
+                    Kirim Pesanan Sekarang
+                </button>
+                <button type="reset" id="btnReset"
+                    class="w-full bg-white border border-gray-300 text-gray-600 font-semibold py-3 rounded-xl hover:bg-gray-50 transition-all active:scale-95">
+                    Reset Form
+                </button>
+            </div>
+        </form>
+
+        <!-- Pesan Error (Hanya tampil jika ada masalah) -->
+        <div id="message" class="hidden p-4 mx-6 mb-6 rounded-lg text-sm font-bold text-center"></div>
+    </div>
+
+    <!-- Success Modal Pop-up -->
+    <div id="successModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-8 text-center transform transition-all scale-100">
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Pemesanan Berhasil!</h2>
+            <p class="text-gray-600 mb-8 text-sm">Terima kasih. Data pesanan jaket Anda telah kami terima dan akan segera diproses oleh tim Tornado Volleyball Klub.</p>
+            <button id="closeModalBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg active:scale-95">
+                Tutup
+            </button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { neon } from 'https://cdn.jsdelivr.net/npm/@neondatabase/serverless@0.10.1/+esm';
+
+        // Konfigurasi Cloudinary
+        const CLOUD_NAME = "dvi5lhmyc"; 
+        const CLOUDINARY_UPLOAD_PRESET = "jaket_order"; 
+
+        // Kredensial Neon
+        const NEON_CONNECTION_STRING = "postgresql://neondb_owner:npg_6PVLTHprIv2h@ep-round-bread-a1h1b9rp-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require";
+
+        // Konfigurasi Telegram
+        const TELEGRAM_BOT_TOKEN = "8266017338:AAGeq3-1pGMxFHc4nSOg311vXlshP0Sp3j4";
+        const TELEGRAM_CHAT_ID = "-5226687960"; 
+
+        const HARGA_PER_JAKET = 225000;
+        let totalHarga = 0;
+
+        const form = document.getElementById('orderForm');
+        const inputs = document.querySelectorAll('.size-input');
+        const displayTotal = document.getElementById('displayTotal');
+        const msgBox = document.getElementById('message');
+        const btnSubmit = document.getElementById('btnSubmit');
+        const copyBtn = document.getElementById('copyBtn');
+        const successModal = document.getElementById('successModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+
+        // Fungsi Salin Rekening
+        window.copyAccNumber = function() {
+            const accNumber = "0863015266";
+            const textArea = document.createElement("textarea");
+            textArea.value = accNumber;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                const feedback = document.getElementById('copyFeedback');
+                feedback.classList.replace('opacity-0', 'opacity-100');
+                setTimeout(() => feedback.classList.replace('opacity-100', 'opacity-0'), 2000);
+            } catch (err) {
+                console.error('Gagal menyalin', err);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        copyBtn.addEventListener('click', window.copyAccNumber);
+        closeModalBtn.addEventListener('click', () => successModal.classList.add('hidden'));
+
+        // Fungsi Update Harga Real-time
+        function updateTotal() {
+            let totalUnit = 0;
+            inputs.forEach(input => {
+                totalUnit += parseInt(input.value) || 0;
+            });
+            totalHarga = totalUnit * HARGA_PER_JAKET;
+            displayTotal.innerText = `Rp ${totalHarga.toLocaleString('id-ID')}`;
+        }
+
+        inputs.forEach(input => input.addEventListener('input', updateTotal));
+
+        // Handler saat form di-reset
+        form.addEventListener('reset', () => {
+            setTimeout(() => {
+                updateTotal();
+                msgBox.classList.add('hidden');
+                msgBox.innerText = "";
+            }, 10);
+        });
+
+        function showError(text) {
+            msgBox.innerText = text;
+            msgBox.className = `p-4 mx-6 mb-6 rounded-lg text-sm font-bold text-center bg-red-100 text-red-700`;
+            msgBox.classList.remove('hidden');
+        }
+
+        // Fungsi kirim notifikasi Telegram sesuai format baru
+        async function sendTelegramNotification(nama, telp, detail, total, proofUrl) {
+            if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return;
+
+            // Mengambil waktu sekarang dalam format lokal Indonesia
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            };
+            const timeString = now.toLocaleString('id-ID', options);
+
+            // Format detail order menjadi string yang rapi
+            const detailOrder = Object.entries(detail)
+                .map(([size, qty]) => `${size} (${qty})`)
+                .join(', ');
+
+            // Susun pesan sesuai permintaan user
+            const message = `Pesanan baru diterima !!\n` +
+                          `Jaket Tornado 2026 model\n\n` +
+                          `Nama : ${nama}\n` +
+                          `Telepon : ${telp}\n` +
+                          `Detail Order : ${detailOrder}\n` +
+                          `Total Pembayaran : Rp ${total.toLocaleString('id-ID')}\n` +
+                          `Bukti Bayar : ${proofUrl}\n` +
+                          `Pesanan dibuat pada : ${timeString}\n` +
+                          `Have a nice day!!`;
+
+            try {
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message
+                        // parse_mode: 'Markdown' dihapus karena link langsung dicetak tanpa format markdown khusus
+                    })
+                });
+            } catch (err) {
+                console.error("Gagal mengirim Telegram:", err);
+            }
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const detailPesanan = {};
+            let hasOrder = false;
+            inputs.forEach(input => {
+                const count = parseInt(input.value) || 0;
+                if(count > 0) {
+                    detailPesanan[input.getAttribute('data-size')] = count;
+                    hasOrder = true;
+                }
+            });
+
+            if (!hasOrder) {
+                showError("Anda belum memilih ukuran jaket.");
+                return;
+            }
+
+            btnSubmit.disabled = true;
+            btnSubmit.innerText = "Sedang Mengirim...";
+            msgBox.classList.add('hidden');
+
+            try {
+                const fileInput = document.getElementById('buktiBayar');
+                if (!fileInput.files[0]) {
+                    throw new Error("Bukti transfer wajib diunggah.");
+                }
+
+                const file = fileInput.files[0];
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+                const cloudRes = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!cloudRes.ok) {
+                    const errorJson = await cloudRes.json();
+                    throw new Error("Gagal upload bukti ke Cloudinary: " + (errorJson.error?.message || "Cek koneksi internet"));
+                }
+                const cloudData = await cloudRes.json();
+                const imageLink = cloudData.secure_url;
+
+                const nama = document.getElementById('nama').value;
+                const telp = document.getElementById('telepon').value;
+
+                if (typeof neon !== 'function') {
+                    throw new Error("Library database gagal dimuat. Silakan muat ulang halaman.");
+                }
+
+                const sql = neon(NEON_CONNECTION_STRING);
+                
+                await sql`
+                    INSERT INTO jacket_orders (nama, nomor_telepon, pesanan, total_harga, bukti_pembayaran_url) 
+                    VALUES (${nama}, ${telp}, ${detailPesanan}, ${totalHarga}, ${imageLink})
+                `;
+
+                // Kirim Notifikasi Telegram
+                await sendTelegramNotification(nama, telp, detailPesanan, totalHarga, imageLink);
+
+                // Tampilkan Modal Sukses
+                successModal.classList.remove('hidden');
+                form.reset();
+                updateTotal();
+
+            } catch (err) {
+                console.error("Detail Error:", err);
+                let errMsg = err.message;
+                if (errMsg.includes("Failed to fetch")) {
+                    errMsg = "Gagal terhubung ke database. Pastikan koneksi internet stabil.";
+                }
+                showError("❌ Terjadi kesalahan: " + errMsg);
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.innerText = "Kirim Pesanan Sekarang";
+            }
+        });
+    </script>
+</body>
+</html>
