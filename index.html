@@ -43,8 +43,18 @@
 
             <!-- Detail Ukuran -->
             <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-3 text-left">Pilih Ukuran & Jumlah *</label>
+                <div class="flex items-center justify-between mb-3">
+                    <label class="block text-sm font-semibold text-gray-700 text-left">Pilih Ukuran & Jumlah *</label>
+                    <button type="button" id="openSizeChartBtn" class="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-600 hover:text-indigo-800 bg-indigo-50 hover:bg-indigo-100 px-2.5 py-1 rounded-lg border border-indigo-200/60 transition shadow-sm active:scale-95">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg>
+                        <span>Size Chart</span>
+                    </button>
+                </div>
                 <div class="grid grid-cols-2 gap-2">
+                    <div class="flex items-center justify-between p-2 border border-gray-200 rounded-lg bg-gray-50">
+                        <span class="font-bold text-gray-600">XS</span>
+                        <input type="number" data-size="XS" value="0" min="0" class="size-input w-14 p-1 text-center border border-gray-300 rounded bg-white font-semibold">
+                    </div>
                     <div class="flex items-center justify-between p-2 border border-gray-200 rounded-lg bg-gray-50">
                         <span class="font-bold text-gray-600">S</span>
                         <input type="number" data-size="S" value="0" min="0" class="size-input w-14 p-1 text-center border border-gray-300 rounded bg-white font-semibold">
@@ -126,6 +136,81 @@
         <div id="message" class="hidden p-4 mx-6 mb-6 rounded-lg text-sm font-bold text-center"></div>
     </div>
 
+    <!-- Size Chart Modal Pop-up -->
+    <div id="sizeChartModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 text-left transform transition-all scale-100 relative">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
+                <div class="flex items-center space-x-2">
+                    <div class="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-gray-800">Panduan Ukuran</h3>
+                        <p class="text-xs text-gray-500">Size Chart Jaket (dalam centimeter / cm)</p>
+                    </div>
+                </div>
+                <button type="button" id="closeSizeChartBtn" class="text-gray-400 hover:text-gray-600 p-1.5 rounded-lg hover:bg-gray-100 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Tabel Size Chart -->
+            <div class="overflow-hidden rounded-xl border border-gray-200 shadow-sm mb-4">
+                <table class="w-full text-center text-sm">
+                    <thead>
+                        <tr class="bg-indigo-600 text-white font-semibold text-xs uppercase tracking-wider">
+                            <th class="py-2.5 px-3">Size</th>
+                            <th class="py-2.5 px-3 border-l border-indigo-500">Lebar (cm)</th>
+                            <th class="py-2.5 px-3 border-l border-indigo-500">Panjang (cm)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 font-medium text-gray-700 bg-white">
+                        <tr class="hover:bg-indigo-50/40 transition">
+                            <td class="py-2 px-3 font-bold text-indigo-700 bg-indigo-50/30">XS</td>
+                            <td class="py-2 px-3">52</td>
+                            <td class="py-2 px-3">57,5</td>
+                        </tr>
+                        <tr class="hover:bg-indigo-50/40 transition">
+                            <td class="py-2 px-3 font-bold text-indigo-700 bg-indigo-50/30">S</td>
+                            <td class="py-2 px-3">54</td>
+                            <td class="py-2 px-3">59,5</td>
+                        </tr>
+                        <tr class="hover:bg-indigo-50/40 transition">
+                            <td class="py-2 px-3 font-bold text-indigo-700 bg-indigo-50/30">M</td>
+                            <td class="py-2 px-3">56</td>
+                            <td class="py-2 px-3">61,5</td>
+                        </tr>
+                        <tr class="hover:bg-indigo-50/40 transition">
+                            <td class="py-2 px-3 font-bold text-indigo-700 bg-indigo-50/30">L</td>
+                            <td class="py-2 px-3">58</td>
+                            <td class="py-2 px-3">63,5</td>
+                        </tr>
+                        <tr class="hover:bg-indigo-50/40 transition">
+                            <td class="py-2 px-3 font-bold text-indigo-700 bg-indigo-50/30">XL</td>
+                            <td class="py-2 px-3">60</td>
+                            <td class="py-2 px-3">65,5</td>
+                        </tr>
+                        <tr class="hover:bg-indigo-50/40 transition">
+                            <td class="py-2 px-3 font-bold text-indigo-700 bg-indigo-50/30">2XL</td>
+                            <td class="py-2 px-3">62</td>
+                            <td class="py-2 px-3">67,5</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="text-[11px] text-gray-500 italic text-center mb-4">
+                * Toleransi ukuran ±1 - 2 cm pada proses produksi.
+            </p>
+
+            <button type="button" id="confirmSizeChartBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-xl transition-all shadow-md active:scale-95 text-sm">
+                Tutup
+            </button>
+        </div>
+    </div>
+
     <!-- Success Modal Pop-up -->
     <div id="successModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden p-4">
         <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-8 text-center transform transition-all scale-100">
@@ -167,6 +252,22 @@
         const copyBtn = document.getElementById('copyBtn');
         const successModal = document.getElementById('successModal');
         const closeModalBtn = document.getElementById('closeModalBtn');
+        const sizeChartModal = document.getElementById('sizeChartModal');
+        const openSizeChartBtn = document.getElementById('openSizeChartBtn');
+        const closeSizeChartBtn = document.getElementById('closeSizeChartBtn');
+        const confirmSizeChartBtn = document.getElementById('confirmSizeChartBtn');
+
+        // Modal Size Chart Event Listeners
+        if (openSizeChartBtn && sizeChartModal) {
+            openSizeChartBtn.addEventListener('click', () => sizeChartModal.classList.remove('hidden'));
+            closeSizeChartBtn?.addEventListener('click', () => sizeChartModal.classList.add('hidden'));
+            confirmSizeChartBtn?.addEventListener('click', () => sizeChartModal.classList.add('hidden'));
+            sizeChartModal.addEventListener('click', (e) => {
+                if (e.target === sizeChartModal) {
+                    sizeChartModal.classList.add('hidden');
+                }
+            });
+        }
 
         // Fungsi Salin Rekening
         window.copyAccNumber = function() {
