@@ -103,6 +103,13 @@
                 </div>
             </div>
 
+            <!-- Catatan Pemesan -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Catatan Pemesan <span class="text-xs font-normal text-gray-500">(Opsional)</span></label>
+                <textarea id="catatan" name="catatan" rows="3" placeholder="Tuliskan catatan tambahan jika ada..."
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition text-sm"></textarea>
+            </div>
+
             <!-- Real-time Billing & Copy Account Info -->
             <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100 shadow-inner">
                 <div class="flex justify-between items-center mb-3">
@@ -410,7 +417,7 @@
         }
 
         // Fungsi kirim notifikasi Telegram sesuai format baru
-        async function sendTelegramNotification(nama, telp, detail, total, proofUrl) {
+        async function sendTelegramNotification(nama, telp, detail, total, proofUrl, catatan) {
             if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return;
 
             // Mengambil waktu sekarang dalam format lokal Indonesia
@@ -430,12 +437,15 @@
                 .map(([size, qty]) => `${size} (${qty})`)
                 .join(', ');
 
+            const catatanText = (catatan && catatan.trim()) ? catatan.trim() : '-';
+
             // Susun pesan sesuai permintaan user
             const message = `Pesanan baru diterima !!\n` +
                           `Jaket Tornado 2026 model\n\n` +
                           `Nama : ${nama}\n` +
                           `Telepon : ${telp}\n` +
                           `Detail Order : ${detailOrder}\n` +
+                          `Catatan : ${catatanText}\n` +
                           `Total Pembayaran : Rp ${total.toLocaleString('id-ID')}\n` +
                           `Bukti Bayar : ${proofUrl}\n` +
                           `Pesanan dibuat pada : ${timeString}\n` +
@@ -503,6 +513,7 @@
 
                 const nama = document.getElementById('nama').value;
                 const telp = document.getElementById('telepon').value;
+                const catatan = document.getElementById('catatan').value.trim();
 
                 if (typeof neon !== 'function') {
                     throw new Error("Library database gagal dimuat. Silakan muat ulang halaman.");
@@ -511,12 +522,12 @@
                 const sql = neon(NEON_CONNECTION_STRING);
                 
                 await sql`
-                    INSERT INTO jacket_orders (nama, nomor_telepon, pesanan, total_harga, bukti_pembayaran_url) 
-                    VALUES (${nama}, ${telp}, ${detailPesanan}, ${totalHarga}, ${imageLink})
+                    INSERT INTO jacket_orders (nama, nomor_telepon, pesanan, total_harga, bukti_pembayaran_url, catatan) 
+                    VALUES (${nama}, ${telp}, ${detailPesanan}, ${totalHarga}, ${imageLink}, ${catatan || null})
                 `;
 
                 // Kirim Notifikasi Telegram
-                await sendTelegramNotification(nama, telp, detailPesanan, totalHarga, imageLink);
+                await sendTelegramNotification(nama, telp, detailPesanan, totalHarga, imageLink, catatan);
 
                 // Tampilkan Modal Sukses
                 successModal.classList.remove('hidden');
